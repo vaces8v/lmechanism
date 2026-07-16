@@ -8,7 +8,7 @@
   var ID = "lm-splash-overlay";
   var MAX = 12000;
   // Use v2 filename to bypass stale jsDelivr @main cache of old splash.
-  var JS_URL = "https://cdn.jsdelivr.net/gh/vaces8v/lmechanism@main/tilda-splash-v2.js";
+  var JS_URL = "https://cdn.jsdelivr.net/gh/vaces8v/lmechanism@e51e071661e8b23706559d4e6257692a3a516880/tilda-splash-v2.js";
 
   function isHomePage() {
     var p = (location.pathname || "/").replace(/\/+$/, "") || "/";
