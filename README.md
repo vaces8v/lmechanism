@@ -1,17 +1,19 @@
-﻿# lmechanism Tilda splash
+# lmechanism Tilda splash
 
 ## Setup in Tilda (Site Settings -> HTML / Head)
 
-1. Remove old splash CSS that sets `overflow: hidden` on `html.lm-splash-pending`
-2. Remove old `LOCK` / `lock()` inline script
+1. Remove old splash CSS with html.lm-splash-pending + overflow: hidden
+2. Remove old LOCK / lock() inline script
 3. Paste:
 
-```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vaces8v/lmechanism@COMMIT/tilda-splash.css">
-<script src="https://cdn.jsdelivr.net/gh/vaces8v/lmechanism@COMMIT/tilda-boot.js"></script>
-```
+`html
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vaces8v/lmechanism@467f8f0c193e0b5a4d9dd2c9acd91936874b88f2/tilda-splash.css">
+<script src="https://cdn.jsdelivr.net/gh/vaces8v/lmechanism@467f8f0c193e0b5a4d9dd2c9acd91936874b88f2/tilda-boot.js"></script>
+`
 
-## Fixes
+4. Publish + Ctrl+F5
+
+## What this fixes
 - Splash only on homepage
-- No long dark screen on inner pages
-- No layout jump after splash: scrollbar gutter stays reserved (`overflow-y: scroll` + `scrollbar-gutter: stable`)
+- No dark screen on /contacts etc.
+- No page jump after splash (scrollbar always reserved)
