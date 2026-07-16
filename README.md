@@ -1,25 +1,17 @@
-﻿# lmechanism — Tilda splash
+﻿# lmechanism Tilda splash
 
-Splash only on homepage. Inner pages must not show a dark screen.
+## Setup in Tilda (Site Settings -> HTML / Head)
 
-## IMPORTANT: change Tilda Site Settings
-
-Updating GitHub is not enough. The live site still embeds the OLD bootstrap that always calls `lock()` on every page.
-
-1. Tilda → Site Settings → More → HTML code (Head)
-2. DELETE the old script with `var LOCK="lm-splash-pending"` / `lock();`
+1. Remove old splash CSS that sets `overflow: hidden` on `html.lm-splash-pending`
+2. Remove old `LOCK` / `lock()` inline script
 3. Paste:
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/vaces8v/lmechanism@main/tilda-boot.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vaces8v/lmechanism@COMMIT/tilda-splash.css">
+<script src="https://cdn.jsdelivr.net/gh/vaces8v/lmechanism@COMMIT/tilda-boot.js"></script>
 ```
 
-4. Publish, then hard-refresh `/contacts` (Ctrl+F5)
-
-Keep the CSS for `html.lm-splash-pending` — without the class it does nothing.
-
-## Files
-
-- `tilda-boot.js` — lock + load splash **only on `/`**
-- `tilda-splash-v2.js` — animation + safety unlock if loaded on inner pages
-- `tilda-splash.js` — same as v2
+## Fixes
+- Splash only on homepage
+- No long dark screen on inner pages
+- No layout jump after splash: scrollbar gutter stays reserved (`overflow-y: scroll` + `scrollbar-gutter: stable`)

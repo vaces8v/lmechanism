@@ -1,27 +1,53 @@
 /**
  * Tilda site-wide bootstrap for LM splash.
- * Put THIS in Site Settings → HTML (instead of the old lock+load snippet).
  * Locks / shows splash ONLY on the homepage.
+ * Keeps scrollbar gutter stable to avoid post-splash layout jump.
  */
 (function () {
   var LOCK = "lm-splash-pending";
   var ID = "lm-splash-overlay";
   var MAX = 12000;
-  // Use v2 filename to bypass stale jsDelivr @main cache of old splash.
-  var JS_URL = "https://cdn.jsdelivr.net/gh/vaces8v/lmechanism@32cfbb921f93664598bf07243e311ca290b54a53/tilda-splash-v2.js";
+  // Updated after each release — pin avoids stale jsDelivr @main cache.
+  var JS_URL = "https://cdn.jsdelivr.net/gh/vaces8v/lmechanism@main/tilda-splash-v2.js";
 
   function isHomePage() {
     var p = (location.pathname || "/").replace(/\/+$/, "") || "/";
     return p === "/" || p === "/index" || p === "/index.html";
   }
 
+  function scrollbarWidth() {
+    return Math.max(0, window.innerWidth - document.documentElement.clientWidth);
+  }
+
   function unlock() {
-    document.documentElement.classList.remove(LOCK);
-    document.documentElement.style.background = "";
+    var root = document.documentElement;
+    root.classList.remove(LOCK);
+    root.style.background = "";
+    root.style.removeProperty("overflow");
+    root.style.removeProperty("overflow-y");
+    root.style.removeProperty("padding-right");
+    root.style.removeProperty("--lm-sbw");
     var b = document.body;
     if (b) {
       b.style.removeProperty("overflow");
       b.style.removeProperty("visibility");
+      b.style.removeProperty("padding-right");
+      b.style.removeProperty("touch-action");
+    }
+  }
+
+  function lock() {
+    var root = document.documentElement;
+    var w = scrollbarWidth();
+    root.classList.add(LOCK);
+    root.style.setProperty("--lm-sbw", w + "px");
+    // Keep page width identical with/without a "real" scrollbar
+    root.style.overflowY = "scroll";
+    if (w > 0) root.style.paddingRight = "0px";
+    var b = document.body;
+    if (b) {
+      b.style.overflow = "hidden";
+      b.style.touchAction = "none";
     }
   }
 
@@ -33,7 +59,6 @@
     }
   }
 
-  // Inner pages: never lock, never load splash.
   if (!isHomePage()) {
     unlock();
     removeStuckOverlay();
@@ -50,12 +75,6 @@
     return;
   }
 
-  function lock() {
-    document.documentElement.classList.add(LOCK);
-    var b = document.body;
-    if (b) b.style.overflow = "hidden";
-  }
-
   function ensureShell() {
     if (document.getElementById(ID) || !document.body) return;
     var o = document.createElement("div");
@@ -66,7 +85,7 @@
     o.style.setProperty("--splash-color", "#ffffff");
     o.innerHTML =
       '<div class="splash-overlay__bg" aria-hidden="true"></div>' +
-      '<div class="splash-logo-wrap" aria-label="Лифтовые Механизмы"></div>';
+      '<div class="splash-logo-wrap" aria-label="Liftovye Mekhanizmy"></div>';
     document.body.appendChild(o);
   }
 
