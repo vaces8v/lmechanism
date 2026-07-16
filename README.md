@@ -1,32 +1,25 @@
 ﻿# lmechanism — Tilda splash
 
-Splash «Лифтовые Механизмы» для Tilda.
+Splash only on homepage. Inner pages must not show a dark screen.
 
-## Важно: тёмный экран на внутренних страницах
+## IMPORTANT: change Tilda Site Settings
 
-В Site Settings был bootstrap, который **сразу** ставил `lm-splash-pending`
-(чёрный фон + `visibility: hidden`) на **всех** страницах, а splash-JS
-на не-главных больше не запускался → экран висел ~12 сек до emergency unlock.
+Updating GitHub is not enough. The live site still embeds the OLD bootstrap that always calls `lock()` on every page.
 
-### Исправление (сделай в Tilda)
-
-1. **Настройки сайта → HTML-код / Head** — замени старый inline bootstrap на:
+1. Tilda → Site Settings → More → HTML code (Head)
+2. DELETE the old script with `var LOCK="lm-splash-pending"` / `lock();`
+3. Paste:
 
 ```html
 <script src="https://cdn.jsdelivr.net/gh/vaces8v/lmechanism@main/tilda-boot.js"></script>
 ```
 
-CSS splash (`html.lm-splash-pending…`) можно оставить — он без класса ничего не прячет.
+4. Publish, then hard-refresh `/contacts` (Ctrl+F5)
 
-2. Убедись, что **старый** скрипт с `lock()` + `cdn.jsdelivr.net/.../tilda-splash.js` **удалён**.
+Keep the CSS for `html.lm-splash-pending` — without the class it does nothing.
 
-3. Чтобы обойти кеш jsDelivr, лучше pin commit:
+## Files
 
-```html
-<script src="https://cdn.jsdelivr.net/gh/vaces8v/lmechanism@COMMIT/tilda-boot.js"></script>
-```
-
-### Что делает код теперь
-
-- `tilda-boot.js` — lock + загрузка splash **только на главной** (`/`)
-- `tilda-splash.js` — если всё же загрузился не на главной, **сразу** снимает lock/overlay
+- `tilda-boot.js` — lock + load splash **only on `/`**
+- `tilda-splash-v2.js` — animation + safety unlock if loaded on inner pages
+- `tilda-splash.js` — same as v2

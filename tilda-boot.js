@@ -7,8 +7,8 @@
   var LOCK = "lm-splash-pending";
   var ID = "lm-splash-overlay";
   var MAX = 12000;
-  // Pin commit to avoid jsDelivr stale @main cache after updates:
-  var JS_URL = "https://cdn.jsdelivr.net/gh/vaces8v/lmechanism@main/tilda-splash.js";
+  // Use v2 filename to bypass stale jsDelivr @main cache of old splash.
+  var JS_URL = "https://cdn.jsdelivr.net/gh/vaces8v/lmechanism@main/tilda-splash-v2.js";
 
   function isHomePage() {
     var p = (location.pathname || "/").replace(/\/+$/, "") || "/";
