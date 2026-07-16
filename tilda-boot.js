@@ -8,7 +8,7 @@
   var ID = "lm-splash-overlay";
   var MAX = 12000;
   // Updated after each release — pin avoids stale jsDelivr @main cache.
-  var JS_URL = "https://cdn.jsdelivr.net/gh/vaces8v/lmechanism@467f8f0c193e0b5a4d9dd2c9acd91936874b88f2/tilda-splash-v2.js";
+  var JS_URL = "https://cdn.jsdelivr.net/gh/vaces8v/lmechanism@ffc056be439852921743159f47fa29899bf95cb8/tilda-splash-v2.js";
 
   function isHomePage() {
     var p = (location.pathname || "/").replace(/\/+$/, "") || "/";
